@@ -9,6 +9,8 @@ namespace NPoco
         public MemberInfo MemberInfo;
         public bool ResultColumn;
         public bool VersionColumn;
+        public bool ReferenceColumn;
+
         private Type _columnType;
         public Type ColumnType
         {

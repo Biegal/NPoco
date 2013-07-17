@@ -67,6 +67,11 @@ namespace NPoco.FluentMappings
                     if (colattr.ForceUtc.HasValue && colattr.ForceUtc.Value)
                         pc.ForceToUtc = true;
 
+                    if (colattr.ReferenceColumn == true)
+                    {
+                        pc.ReferenceColumn = true;
+                    }
+
                     if (TableInfo.PrimaryKey.Split(',').Contains(mi.Name))
                         TableInfo.PrimaryKey = (pc.ColumnName ?? mi.Name) + ",";
 

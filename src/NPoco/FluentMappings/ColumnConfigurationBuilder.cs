@@ -32,6 +32,7 @@ namespace NPoco.FluentMappings
         IColumnBuilder Version();
         IColumnBuilder Ignore();
         IColumnBuilder Result();
+        IColumnBuilder AsReference();
     }
 
     public class ColumnBuilder : IColumnBuilder
@@ -75,6 +76,12 @@ namespace NPoco.FluentMappings
         public IColumnBuilder Result()
         {
             _columnDefinition.ResultColumn = true;
+            return this;
+        }
+
+        public IColumnBuilder AsReference()
+        {
+            _columnDefinition.ReferenceColumn = true;
             return this;
         }
     }

@@ -1097,6 +1097,19 @@ namespace NPoco
                     values.Add(string.Format("{0}{1}", _paramPrefix, index++));
 
                     object val = i.Value.GetValue(poco);
+
+                    if (val != null && i.Value.ReferenceColumn)
+                    {
+                        var refererencePocoData = PocoData.ForType(val.GetType(), PocoDataFactory);
+                        if (refererencePocoData != null)
+                        {
+                            string referenceTablePrimaryKeyName = refererencePocoData.TableInfo.PrimaryKey;
+                            var referenceIdColumn = refererencePocoData.Columns[referenceTablePrimaryKeyName];
+
+                            val = referenceIdColumn.GetValue(val);
+                        }
+                    }
+
                     if (Mapper != null)
                     {
                         var converter = Mapper.GetToDbConverter(i.Value.ColumnType, i.Value.MemberInfo.GetMemberInfoType());
@@ -1242,6 +1255,18 @@ namespace NPoco
                     versionName = i.Key;
                     versionValue = value;
                     value = Convert.ToInt64(value) + 1;
+                }
+
+                if (i.Value.ReferenceColumn)
+                {
+                    var refererencePocoData = PocoData.ForType(value.GetType(), PocoDataFactory);
+                    if (refererencePocoData != null)
+                    {
+                        string referenceTablePrimaryKeyName = refererencePocoData.TableInfo.PrimaryKey;
+                        var referenceIdColumn = refererencePocoData.Columns[referenceTablePrimaryKeyName];
+
+                        value = referenceIdColumn.GetValue(value);
+                    }
                 }
 
                 // Build the sql

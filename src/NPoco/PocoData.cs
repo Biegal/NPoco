@@ -287,6 +287,11 @@ namespace NPoco
                                 continue;
                             }
 
+                            if (pc.ReferenceColumn)
+                            {
+                                continue;
+                            }
+
                             // Get the source type for this column
                             var srcType = r.GetFieldType(i);
                             var dstType = pc.MemberInfo.GetMemberInfoType();
