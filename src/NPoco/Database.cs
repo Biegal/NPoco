@@ -1257,7 +1257,7 @@ namespace NPoco
                     value = Convert.ToInt64(value) + 1;
                 }
 
-                if (i.Value.ReferenceColumn)
+                if (value != null && i.Value.ReferenceColumn)
                 {
                     var refererencePocoData = PocoData.ForType(value.GetType(), PocoDataFactory);
                     if (refererencePocoData != null)
